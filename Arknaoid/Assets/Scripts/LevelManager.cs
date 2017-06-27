@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
     private int playerScore;
@@ -9,6 +10,8 @@ public class LevelManager : MonoBehaviour {
 
     [SerializeField] private  Text playerScoreText;
     [SerializeField] private  Text playerLifeText;
+
+    // ------------ Métodos API ------------------------
 
     // Use this for initialization
     void Start ()
@@ -18,7 +21,13 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        if (playerLife <=0)
+        {
+            playerLife = 5;
+            SceneManager.LoadScene(1);
+        }
 		
 	}
 
@@ -26,7 +35,11 @@ public class LevelManager : MonoBehaviour {
     public void SetPlayerScore(int score)
     {
         playerScore = score;
-        playerScoreText.text = "Score: \n " +  score;
+        if (playerScoreText!=null)
+        {
+            playerScoreText.text = "Score: \n " + score;
+        }
+        
 
     }
     public int GetPlayerScore()
@@ -38,8 +51,10 @@ public class LevelManager : MonoBehaviour {
     public void SetPlayerLife(int life)
     {
         playerLife = life;
-        playerLifeText.text = "Lifes: \n " + life;
-
+        if (playerLifeText!=null)
+        {
+            playerLifeText.text = "Lifes: \n " + life;
+        }
     }
     public int GetPlayerLife()
     {
